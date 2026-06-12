@@ -179,109 +179,233 @@ select option{background:#1a1a2e}
 # ══════════════════════════════════════════════════════════════════════
 # PÁGINA PRINCIPAL
 # ══════════════════════════════════════════════════════════════════════
-HTML_MAIN = '''<!DOCTYPE html><html lang="pt-BR"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Encurtador de Links</title>
-<style>''' + BASE_CSS + '''
-body{display:flex;align-items:flex-start;justify-content:center;padding:36px 16px}
-.card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:18px;padding:40px 36px;width:100%;max-width:600px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.logo{text-align:center;margin-bottom:20px}
-.logo-icon{font-size:40px}
-h1{color:#fff;font-size:24px;font-weight:700;text-align:center;margin:6px 0 4px}
-.sub{color:#6b6b8a;font-size:13px;text-align:center;margin-bottom:6px}
-.nav-lnk{display:block;text-align:center;font-size:13px;margin-bottom:28px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
-.input-row{display:flex;gap:10px;margin-bottom:12px}
+HTML_MAIN = '''<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encurtador de Links — Lobios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#6C2B87;
+  --purple-h:#9040b1;
+  --orange:#ff5538;
+  --cyan:#11ddf5;
+  --blue:#086ad8;
+  --text:#4c4d56;
+  --dark:#1a1a2a;
+}
+body{font-family:"Barlow",sans-serif;background:#f5f5f8;color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+/* ── NAVBAR ── */
+.navbar{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08);position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-logo img{height:40px;display:block}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{font-family:"Jost",sans-serif;font-size:14px;font-weight:500;color:var(--text);padding:8px 14px;border-radius:6px;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--purple)}
+.nav-links a.active{color:var(--purple);font-weight:700}
+.nav-btn{background:var(--purple);color:#fff!important;border-radius:8px;padding:9px 20px!important;font-weight:700!important;transition:background .2s!important}
+.nav-btn:hover{background:var(--purple-h)!important}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--purple) 0%,#3d1058 100%);padding:64px 24px 72px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:6px 16px;font-family:"Jost",sans-serif;font-size:12px;font-weight:600;color:#fff;letter-spacing:.5px;text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-family:"Jost",sans-serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:#fff;line-height:1.2;margin-bottom:12px}
+.hero h1 span{color:var(--cyan)}
+.hero p{color:rgba(255,255,255,.75);font-size:16px;max-width:520px;margin:0 auto 36px;line-height:1.6}
+
+/* ── CARD DO FORMULÁRIO ── */
+.form-card{background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(108,43,135,.18);padding:36px 32px;max-width:640px;width:100%;margin:0 auto;position:relative}
+.form-card label{display:block;font-family:"Jost",sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#888;margin-bottom:6px}
+.form-card input,.form-card select,.form-card textarea{width:100%;background:#f8f7fb;border:1.5px solid #e8e0f0;border-radius:10px;padding:11px 14px;color:var(--dark);font-size:14px;font-family:"Barlow",sans-serif;outline:none;transition:border-color .2s}
+.form-card input:focus,.form-card select:focus{border-color:var(--purple);background:#fff}
+.form-card input::placeholder{color:#bbb}
+.fg{margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.input-row{display:flex;gap:10px;margin-bottom:14px}
 .input-row input{flex:1}
-.fg{margin-bottom:12px}
-.opt-toggle{color:#6c63ff;font-size:12px;cursor:pointer;margin-bottom:10px;display:inline-block;user-select:none}
-.opt-toggle:hover{text-decoration:underline}
+.btn-main{background:var(--purple);border:none;border-radius:10px;padding:12px 24px;color:#fff;font-size:14px;font-weight:700;font-family:"Jost",sans-serif;cursor:pointer;transition:background .2s;white-space:nowrap;letter-spacing:.3px}
+.btn-main:hover{background:var(--purple-h)}
+.btn-main:disabled{opacity:.6;cursor:not-allowed}
+.btn-ghost{background:#fff;border:1.5px solid #e0d0ec;border-radius:8px;padding:7px 14px;color:var(--purple);font-size:12px;font-weight:700;font-family:"Jost",sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-ghost:hover{border-color:var(--purple);background:#f9f4fc}
+.btn-ghost.ok{border-color:#22c55e;color:#22c55e}
+.opt-toggle{color:var(--purple);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:12px;display:inline-flex;align-items:center;gap:5px;user-select:none;font-family:"Jost",sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.opt-toggle:hover{color:var(--purple-h)}
 .opts{display:none}
 .opts.open{display:block}
-.result-box{display:none;background:#0f0f1a;border:1px solid #2a2a4a;border-radius:10px;padding:14px 16px;margin-top:4px}
+.result-box{display:none;background:linear-gradient(135deg,#f5f0fd,#ede4f8);border:1.5px solid #d4b8ec;border-radius:12px;padding:16px 18px;margin-top:6px}
 .result-box.visible{display:block}
-.result-row{display:flex;align-items:center;gap:10px;margin-top:6px}
-.short-url{flex:1;color:#a78bfa;font-size:15px;font-weight:700;text-decoration:none;word-break:break-all}
+.result-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.short-url{flex:1;color:var(--purple);font-size:15px;font-weight:700;text-decoration:none;word-break:break-all;font-family:"Jost",sans-serif}
 .short-url:hover{text-decoration:underline}
-.error{background:#1a0f0f;border:1px solid #4a2a2a;border-radius:10px;padding:12px 16px;color:#f87171;font-size:13px;margin-top:4px;display:none}
+.error{background:#fff5f5;border:1.5px solid #fcc;border-radius:10px;padding:12px 16px;color:#e53e3e;font-size:13px;margin-top:6px;display:none}
 .error.visible{display:block}
-.sess{margin-top:28px}
-.sess h2{color:#6b6b8a;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;font-weight:700}
-.sess-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.sess-item{background:#0f0f1a;border:1px solid #1e1e35;border-radius:9px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── SESSÃO ── */
+.sess{margin-top:28px;padding-top:20px;border-top:1.5px solid #f0eaf8}
+.sess h2{font-family:"Jost",sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#aaa;margin-bottom:12px}
+.sess-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sess-item{background:#f8f7fb;border:1.5px solid #ede5f5;border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px}
 .sess-info{flex:1;min-width:0}
-.sess-cli{color:#6c63ff;font-size:11px;margin-bottom:1px}
-.sess-orig{color:#4a4a6a;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sess-short{color:#a78bfa;font-size:13px;font-weight:700;text-decoration:none}
+.sess-cli{color:var(--purple);font-size:11px;font-weight:700;font-family:"Jost",sans-serif;margin-bottom:2px}
+.sess-orig{color:#aaa;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sess-short{color:var(--purple);font-size:13px;font-weight:700;text-decoration:none;font-family:"Jost",sans-serif}
 .sess-short:hover{text-decoration:underline}
-.empty{color:#3a3a5a;font-size:13px;text-align:center;padding:14px}
-</style></head><body>
-<div class="card">
-  <div class="logo">
-    <div class="logo-icon">🔗</div>
-    <h1>Encurtador de Links</h1>
-    <p class="sub">Seu encurtador pessoal</p>
-    <a class="nav-lnk" href="/historico">📋 Histórico &amp; Analytics →</a>
-  </div>
+.empty{color:#ccc;font-size:13px;text-align:center;padding:16px}
 
-  <div class="fg">
-    <label>Cliente</label>
-    <input type="text" id="cliente" placeholder="Ex: Empresa ABC" list="cli-list">
-    <datalist id="cli-list"></datalist>
-  </div>
+/* ── MAIN AREA ── */
+.main-area{flex:1;background:#f5f5f8;padding:40px 24px}
+.main-area-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:36px;align-items:start}
+@media(max-width:900px){.main-area-inner{grid-template-columns:1fr}}
 
-  <div class="fg">
-    <label>Link longo</label>
-    <div class="input-row">
-      <input type="url" id="inp" placeholder="https://exemplo.com/link/longo...">
-      <button class="btn" id="btn" onclick="encurtar()">Encurtar</button>
+/* ── INFO CARDS ── */
+.info-cards{display:flex;flex-direction:column;gap:16px}
+.info-card{background:#fff;border-radius:14px;padding:22px 24px;border-left:4px solid var(--purple);box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.info-card-icon{font-size:22px;margin-bottom:8px}
+.info-card h3{font-family:"Jost",sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.info-card p{font-size:13px;color:#888;line-height:1.5}
+.info-card:nth-child(2){border-left-color:var(--orange)}
+.info-card:nth-child(3){border-left-color:var(--cyan)}
+
+/* ── FOOTER ── */
+.footer{background:var(--dark);padding:28px 24px;text-align:center}
+.footer-logo img{height:32px;margin:0 auto 12px;display:block}
+.footer-text{color:rgba(255,255,255,.4);font-size:12px}
+.footer-text a{color:rgba(255,255,255,.6);text-decoration:none}
+.footer-text a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://lobios.com.br" target="_blank">
+      <img src="https://lobios.com.br/assets/images/logo.png" alt="Lobios">
+    </a>
+    <div class="nav-links">
+      <a href="/" class="active">Encurtador</a>
+      <a href="/historico" class="nav-btn">Histórico &amp; Analytics</a>
     </div>
   </div>
+</nav>
 
-  <span class="opt-toggle" onclick="toggleOpts()">⚙ Opções avançadas ▾</span>
-  <div class="opts" id="opts">
-    <div class="row2">
-      <div>
-        <label>Alias personalizado (opcional)</label>
-        <input type="text" id="alias" placeholder="minha-empresa">
-      </div>
-      <div>
-        <label>Tags (separadas por vírgula)</label>
-        <input type="text" id="tags" placeholder="marketing, campanha">
-      </div>
-    </div>
-    <div class="row2">
-      <div>
-        <label>Senha do link (opcional)</label>
-        <input type="password" id="lnk-senha" placeholder="Deixe vazio para público">
-      </div>
-      <div>
-        <label>Expira em (opcional)</label>
-        <input type="date" id="expira">
-      </div>
-    </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🔗 Lobios Link Shortener</div>
+  <h1>Encurte seus links.<br><span>Simples e seguro.</span></h1>
+  <p>Cole um link longo, defina o cliente, adicione opções avançadas e gere um link curto instantaneamente.</p>
+
+  <!-- FORM CARD dentro do hero -->
+  <div class="form-card">
     <div class="fg">
-      <label>Nota / descrição</label>
-      <input type="text" id="nota" placeholder="Ex: campanha de junho">
+      <label>Cliente</label>
+      <input type="text" id="cliente" placeholder="Ex: Empresa ABC" list="cli-list">
+      <datalist id="cli-list"></datalist>
+    </div>
+
+    <div class="fg">
+      <label>Link longo</label>
+      <div class="input-row">
+        <input type="url" id="inp" placeholder="https://exemplo.com/link/muito/longo...">
+        <button class="btn-main" id="btn" onclick="encurtar()">Encurtar</button>
+      </div>
+    </div>
+
+    <div>
+      <span class="opt-toggle" onclick="toggleOpts()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Opções avançadas <span id="opt-arrow">▾</span>
+      </span>
+    </div>
+    <div class="opts" id="opts">
+      <div class="row2">
+        <div>
+          <label>Alias personalizado</label>
+          <input type="text" id="alias" placeholder="minha-empresa">
+        </div>
+        <div>
+          <label>Tags (vírgula)</label>
+          <input type="text" id="tags" placeholder="marketing, campanha">
+        </div>
+      </div>
+      <div class="row2">
+        <div>
+          <label>Senha do link</label>
+          <input type="password" id="lnk-senha" placeholder="Deixe vazio para público">
+        </div>
+        <div>
+          <label>Expira em</label>
+          <input type="date" id="expira">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Nota / descrição</label>
+        <input type="text" id="nota" placeholder="Ex: campanha de junho">
+      </div>
+    </div>
+
+    <div class="result-box" id="res">
+      <div style="color:#6C2B87;font-size:12px;font-weight:700;font-family:Jost,sans-serif">✅ Link encurtado com sucesso!</div>
+      <div class="result-row">
+        <a class="short-url" id="short" href="#" target="_blank"></a>
+        <button class="btn-ghost" id="btnQr" onclick="abrirQr()">QR Code</button>
+        <button class="btn-ghost" id="btnCopy" onclick="copiar()">Copiar</button>
+      </div>
+    </div>
+    <div class="error" id="err"></div>
+
+    <div class="sess">
+      <h2>Links desta sessão</h2>
+      <ul class="sess-list" id="hist"><li class="empty">Nenhum link encurtado ainda.</li></ul>
     </div>
   </div>
+</section>
 
-  <div class="result-box" id="res">
-    <div class="muted" style="font-size:12px">✅ Link encurtado!</div>
-    <div class="result-row">
-      <a class="short-url" id="short" href="#" target="_blank"></a>
-      <button class="btn-ghost" id="btnQr" onclick="abrirQr()">QR</button>
-      <button class="btn-ghost" id="btnCopy" onclick="copiar()">Copiar</button>
+<!-- INFO CARDS -->
+<div class="main-area">
+  <div class="main-area-inner">
+    <div><!-- espaço para expansão futura --></div>
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-card-icon">📊</div>
+        <h3>Analytics detalhado</h3>
+        <p>Veja país, cidade, dispositivo, navegador e referência por clique.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🔒</div>
+        <h3>Links protegidos</h3>
+        <p>Adicione senha individual, data de expiração e alias personalizado.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📁</div>
+        <h3>Organizado por cliente</h3>
+        <p>Separe os links por cliente com histórico e filtros no painel.</p>
+      </div>
     </div>
-  </div>
-  <div class="error" id="err"></div>
-
-  <div class="sess">
-    <h2>Sessão atual</h2>
-    <ul class="sess-list" id="hist"><li class="empty">Nenhum link encurtado ainda.</li></ul>
   </div>
 </div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">
+    <img src="https://lobios.com.br/assets/images/logobranca.png" alt="Lobios">
+  </div>
+  <p class="footer-text">
+    © 2024 Lobios — Soluções em Tecnologia da Informação &nbsp;|&nbsp;
+    <a href="https://lobios.com.br" target="_blank">lobios.com.br</a>
+  </p>
+</footer>
 
 <script>
 const sessao=[];
@@ -292,8 +416,7 @@ fetch('/clientes').then(r=>r.json()).then(l=>{
 function toggleOpts(){
   const el=document.getElementById('opts');
   el.classList.toggle('open');
-  document.querySelector('.opt-toggle').textContent=
-    el.classList.contains('open')?'⚙ Opções avançadas ▴':'⚙ Opções avançadas ▾';
+  document.getElementById('opt-arrow').textContent=el.classList.contains('open')?'▴':'▾';
 }
 async function encurtar(){
   const url=document.getElementById('inp').value.trim();
@@ -351,7 +474,7 @@ function renderHist(){
         <div class="sess-orig">${esc(it.original)}</div>
         <a class="sess-short" href="${esc(it.curto)}" target="_blank">${esc(it.curto)}</a>
       </div>
-      <div style="display:flex;gap:6px">
+      <div style="display:flex;gap:6px;flex-shrink:0">
         <button class="btn-ghost" onclick="abrirQr('${esc(it.codigo)}')">QR</button>
         <button class="btn-ghost" onclick="copiar('${esc(it.curto)}',this)">Copiar</button>
       </div>
@@ -359,7 +482,9 @@ function renderHist(){
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')encurtar();});
-</script></body></html>'''
+</script>
+</body>
+</html>'''
 
 # ══════════════════════════════════════════════════════════════════════
 # LOGIN
