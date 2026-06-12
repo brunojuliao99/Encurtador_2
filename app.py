@@ -372,29 +372,6 @@ body{font-family:"Barlow",sans-serif;background:#f5f5f8;color:var(--text);min-he
   </div>
 </section>
 
-<!-- INFO CARDS -->
-<div class="main-area">
-  <div class="main-area-inner">
-    <div><!-- espaço para expansão futura --></div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-icon">📊</div>
-        <h3>Analytics detalhado</h3>
-        <p>Veja país, cidade, dispositivo, navegador e referência por clique.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">🔒</div>
-        <h3>Links protegidos</h3>
-        <p>Adicione senha individual, data de expiração e alias personalizado.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">📁</div>
-        <h3>Organizado por cliente</h3>
-        <p>Separe os links por cliente com histórico e filtros no painel.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer class="footer">
